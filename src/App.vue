@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { supabase } from '@/lib/supabaseClient'
+import AuthLayout from '@/components/layout/main/AuthLayout.vue'
 </script>
 
 <template>
-  <main>
+  <AuthLayout>
     <RouterView />
-  </main>
+  </AuthLayout>
 </template>
