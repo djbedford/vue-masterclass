@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { usePageStore } from '@/stores/page'
-
 const { pageData } = storeToRefs(usePageStore())
 </script>
 
