@@ -1,69 +1,21 @@
 <script setup lang="ts">
-import { supabase } from '@/lib/supabaseClient'
-import { h, ref } from 'vue'
-import type { Tables } from '../../../database/types'
-import type { ColumnDef } from '@tanstack/vue-table'
-import DataTable from '@/components/ui/data-table/DataTable.vue'
-import { RouterLink } from 'vue-router'
+import { tasksWithProjectsQuery } from '@/utils/supaQueries'
+import type { TasksWithProjects } from '@/utils/supaQueries'
+import { columns } from '@/utils/tableColumns/tasksColumns'
 
-const tasks = ref<Tables<'tasks'>[] | null>(null)
+usePageStore().pageData.title = 'My Tasks'
 
-const columns: ColumnDef<Tables<'tasks'>>[] = [
-  {
-    accessorKey: 'name',
-    header: () => h('div', { class: 'text-left' }, 'Name'),
-    cell: ({ row }) => {
-      return h(
-        RouterLink,
-        {
-          to: `/tasks/${row.original.id}`,
-          class: 'text-left font-medium hover:bg-muted block w-full',
-        },
-        () => row.getValue('name'),
-      )
-    },
-  },
-  {
-    accessorKey: 'status',
-    header: () => h('div', { class: 'text-left' }, 'Status'),
-    cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('status'))
-    },
-  },
-  {
-    accessorKey: 'due_date',
-    header: () => h('div', { class: 'text-left' }, 'Due Date'),
-    cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('due_date'))
-    },
-  },
-  {
-    accessorKey: 'project_id',
-    header: () => h('div', { class: 'text-left' }, 'Project'),
-    cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('project_id'))
-    },
-  },
-  {
-    accessorKey: 'collaborators',
-    header: () => h('div', { class: 'text-left' }, 'Collaborators'),
-    cell: ({ row }) => {
-      return h(
-        'div',
-        { class: 'text-left font-medium' },
-        JSON.stringify(row.getValue('collaborators')),
-      )
-    },
-  },
-]
+const tasks = ref<TasksWithProjects | null>(null)
 
-;(async () => {
-  const { data, error } = await supabase.from('tasks').select()
+const getTasks = async () => {
+  const { data, error } = await tasksWithProjectsQuery
 
   if (error) console.error(error)
 
   tasks.value = data
-})()
+}
+
+await getTasks()
 </script>
 
 <template>
