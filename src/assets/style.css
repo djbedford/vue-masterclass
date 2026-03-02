@@ -1,5 +1,7 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
+
+@source "../../formkit.theme.ts";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -117,4 +119,14 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.scale-enter-active,
+.scale-leave-active {
+  transition: transform 0.1s;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  transform: scale(0.3);
 }

@@ -22,6 +22,7 @@
     "db:seed": "node --env-file=.env database/seed.js"
   },
   "dependencies": {
+    "@formkit/vue": "^1.7.2",
     "@supabase/supabase-js": "^2.98.0",
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/vue-table": "^8.21.3",
